@@ -27,6 +27,7 @@ Selected.
 If use Github, the first branch is "main".
 
     git init
+    echo "# <Repository Name>" > README.md
     git add README.md
     git commit -m "<commit details>"
     git branch -M <branch name>
