@@ -3,7 +3,7 @@
 ## Windows
 https://www.python.org/downloads/
 
-> Add python x.x to PATH
+> Add python x.x to PATH\
 > Disable PATH Limit
 
     python -V
