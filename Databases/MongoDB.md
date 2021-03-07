@@ -32,3 +32,9 @@ https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
     sudo systemctl start mongod
     sudo systemctl status mongod
     mongo
+
+# Use
+
+## with Node.js
+https://www.npmjs.com/package/mongodb
+https://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html
