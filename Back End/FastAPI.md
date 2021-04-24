@@ -1,3 +1,3 @@
 # FastAPI
 
-Base on Starlette > a lightweight ASGI
+Base on Starlette > a lightweight ASGI.
