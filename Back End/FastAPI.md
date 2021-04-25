@@ -20,17 +20,21 @@ https://fastapi.tiangolo.com/alternatives/
 
 * in main.py
 
-        from fastapi import FastAPI
-        app = FastAPI()
+```python
+from fastapi import FastAPI
+app = FastAPI()
 
-        @app.get("/")
-        async def root():
-        return {"message": "Hello World"}
+@app.get("/")
+async def root():
+return {"message": "Hello World"}
+```
 
-* start
+* start\
+--reload: use in developement enviroment, auto-reload when update code.
 
-        uvicorn main:app --reload
-    --reload: use in developement enviroment, auto-reload when update code.
+```bash
+uvicorn main:app --reload
+```
 
 * API document\
 http://127.0.0.1:8000/docs\
@@ -43,58 +47,66 @@ https://fastapi.tiangolo.com/tutorial/first-steps/
 
 * basic
 
-        from fastapi import FastAPI
-        app = FastAPI()
+```python
+from fastapi import FastAPI
+app = FastAPI()
 
-        @app.get("/items/{item_id}")
-        async def read_item(item_id: int):
-        return {"item_id": item_id}
+@app.get("/items/{item_id}")
+async def read_item(item_id: int):
+return {"item_id": item_id}
+```
 
 * pydantic DTO(Data Transfer Object)
 
-        from enum import Enum
-        from fastapi import FastAPI
+```python
+from enum import Enum
+from fastapi import FastAPI
 
-        class ModelName(str, Enum):
-            alexnet = "alexnet"
-            resnet = "resnet"
-            lenet = "lenet"
+class ModelName(str, Enum):
+    alexnet = "alexnet"
+    resnet = "resnet"
+    lenet = "lenet"
 
-        app = FastAPI()
+app = FastAPI()
 
-        @app.get("/models/{model_name}")
-        async def get_model(model_name: ModelName):
-        if model_name == ModelName.alexnet:
-            return {"model_name": model_name, "message": "Deep Learning FTW!"}
+@app.get("/models/{model_name}")
+async def get_model(model_name: ModelName):
+if model_name == ModelName.alexnet:
+    return {"model_name": model_name, "message": "Deep Learning FTW!"}
 
-        if model_name.value == "lenet":
-            return {"model_name": model_name, "message": "LeCNN all the images"}
+if model_name.value == "lenet":
+    return {"model_name": model_name, "message": "LeCNN all the images"}
 
-        return {"model_name": model_name, "message": "Have some residuals"}
+return {"model_name": model_name, "message": "Have some residuals"}
+```
 
 * Path convertor
 
-        from fastapi import FastAPI
+```python
+from fastapi import FastAPI
 
-        app = FastAPI()
+app = FastAPI()
 
-        @app.get("/files/{file_path:path}")
-        async def read_file(file_path: str):
-            return {"file_path": file_path}
+@app.get("/files/{file_path:path}")
+async def read_file(file_path: str):
+    return {"file_path": file_path}
+```
 
 * query params\
 If not default value, the params should be needy.\
 http://127.0.0.1:8000/items/?skip=0&limit=10
 
-        from fastapi import FastAPI
+```python
+from fastapi import FastAPI
 
-        app = FastAPI()
+app = FastAPI()
 
-        fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
+fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
 
-        @app.get("/items/")
-        async def read_item(skip: int = 0, limit: int = 10):
-            return fake_items_db[skip : skip + limit]
+@app.get("/items/")
+async def read_item(skip: int = 0, limit: int = 10):
+    return fake_items_db[skip : skip + limit]
+```
 
 https://fastapi.tiangolo.com/tutorial/path-params/
 https://fastapi.tiangolo.com/zh/tutorial/query-params/
