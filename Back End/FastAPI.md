@@ -58,7 +58,7 @@ async def read_item(item_id: int):
 return {"item_id": item_id}
 ```
 
-pydantic DTO(Data Transfer Object)
+### pydantic DTO(Data Transfer Object)
 
 ```python
 from enum import Enum
@@ -112,6 +112,92 @@ async def read_item(skip: int = 0, limit: int = 10):
 
 https://fastapi.tiangolo.com/tutorial/path-params/
 https://fastapi.tiangolo.com/zh/tutorial/query-params/
+
+## Validation
+
+### Query params
+
+Generic validations and metadata:
+
+* alias
+* title
+* description
+* deprecated
+
+Validations specific for strings:
+
+* min_length
+* max_length
+* regex
+
+```python
+from typing import Optional
+from fastapi import FastAPI, Query
+
+app = FastAPI()
+
+@app.get("/items/")
+async def read_items(
+    q: Optional[str] = Query(
+        None,
+        title="Query string",
+        description="Query string for the items to search in the database that have a good match",
+        alias="item-query",
+        min_length=3,
+        max_length=50,
+        regex="^fixedquery$"
+        )
+    ):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
+```
+
+if deprecated, show in document.
+
+```python
+@app.get("/items/")
+async def read_items(
+    q: Optional[str] = Query(
+        None,
+        deprecated=True
+        )
+    ):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
+```
+### Path params
+
+Operator
+* gt: greater than
+* ge: greater than or equal
+* lt: less than
+* le: less than or equal
+
+```python
+from fastapi import FastAPI, Path
+
+app = FastAPI()
+
+@app.get("/items/{item_id}")
+async def read_items(
+    *,
+    item_id: int = Path(..., title="The ID of the item to get", gt=0, le=1000),
+    q: str,
+):
+    results = {"item_id": item_id}
+    if q:
+        results.update({"q": q})
+    return results
+```
+
+Python won't do anything with that *, but it will know that all the following parameters should be called as keyword arguments (key-value pairs), also known as kwargs. Even if they don't have a default value.
+
+https://fastapi.tiangolo.com/tutorial/query-params-str-validations/
+https://fastapi.tiangolo.com/tutorial/path-params-numeric-validations/
 
 ## CORS
 
