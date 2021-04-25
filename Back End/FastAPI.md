@@ -11,14 +11,16 @@ https://fastapi.tiangolo.com/alternatives/
 
 ## Install
 
-    pip install fastapi[all]
-    or
-    pip install fastapi
-    pip install uvicorn[standard]
+```bash
+pip install fastapi[all]
+# or
+pip install fastapi
+pip install uvicorn[standard]
+```
 
 ## first-step
 
-* in main.py
+in main.py
 
 ```python
 from fastapi import FastAPI
@@ -29,14 +31,14 @@ async def root():
 return {"message": "Hello World"}
 ```
 
-* start\
+start\
 --reload: use in developement enviroment, auto-reload when update code.
 
 ```bash
 uvicorn main:app --reload
 ```
 
-* API document\
+API document\
 http://127.0.0.1:8000/docs\
 http://127.0.0.1:8000/redoc\
 http://127.0.0.1:8000/openapi.json
@@ -45,7 +47,7 @@ https://fastapi.tiangolo.com/tutorial/first-steps/
 
 ## params
 
-* basic
+### basic
 
 ```python
 from fastapi import FastAPI
@@ -56,7 +58,7 @@ async def read_item(item_id: int):
 return {"item_id": item_id}
 ```
 
-* pydantic DTO(Data Transfer Object)
+pydantic DTO(Data Transfer Object)
 
 ```python
 from enum import Enum
@@ -80,7 +82,7 @@ if model_name.value == "lenet":
 return {"model_name": model_name, "message": "Have some residuals"}
 ```
 
-* Path convertor
+### Path convertor
 
 ```python
 from fastapi import FastAPI
@@ -92,7 +94,7 @@ async def read_file(file_path: str):
     return {"file_path": file_path}
 ```
 
-* query params\
+### query params
 If not default value, the params should be needy.\
 http://127.0.0.1:8000/items/?skip=0&limit=10
 
