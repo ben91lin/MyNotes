@@ -18,7 +18,7 @@ pip install fastapi
 pip install uvicorn[standard]
 ```
 
-## first-step
+## first step
 
 in main.py
 
@@ -39,8 +39,8 @@ uvicorn main:app --reload
 ```
 
 API document\
-http://127.0.0.1:8000/docs\
-http://127.0.0.1:8000/redoc\
+http://127.0.0.1:8000/docs \
+http://127.0.0.1:8000/redoc \
 http://127.0.0.1:8000/openapi.json
 
 https://fastapi.tiangolo.com/tutorial/first-steps/
@@ -110,7 +110,7 @@ async def read_item(skip: int = 0, limit: int = 10):
     return fake_items_db[skip : skip + limit]
 ```
 
-https://fastapi.tiangolo.com/tutorial/path-params/
+https://fastapi.tiangolo.com/tutorial/path-params/ \
 https://fastapi.tiangolo.com/zh/tutorial/query-params/
 
 ## Validation
@@ -198,6 +198,193 @@ Python won't do anything with that *, but it will know that all the following pa
 
 https://fastapi.tiangolo.com/tutorial/query-params-str-validations/
 https://fastapi.tiangolo.com/tutorial/path-params-numeric-validations/
+
+## Request
+
+### Request Body
+
+```python
+from typing import Optional
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+class Item(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+
+app = FastAPI()
+
+@app.post("/items/")
+async def create_item(item: Item):
+    return item
+```
+### Embed a single body parameter
+
+```python
+# item: Item = Body(..., embed=True)
+from typing import Optional
+from fastapi import Body, FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Item(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+
+@app.put("/items/{item_id}")
+async def update_item(item_id: int, item: Item = Body(..., embed=True)):
+    results = {"item_id": item_id, "item": item}
+    return results
+
+# expect body
+{
+    "item": {
+        "name": "Foo",
+        "description": "The pretender",
+        "price": 42.0,
+        "tax": 3.2
+    }
+}
+# not
+{
+    "name": "Foo",
+    "description": "The pretender",
+    "price": 42.0,
+    "tax": 3.2
+}
+```
+
+### Fields
+
+```python
+from typing import Optional
+from fastapi import Body, FastAPI
+from pydantic import BaseModel, Field
+
+app = FastAPI()
+
+class Item(BaseModel):
+    name: str
+    description: Optional[str] = Field(
+        None, title="The description of the item", max_length=300
+    )
+    price: float = Field(..., gt=0, description="The price must be greater than zero")
+    tax: Optional[float] = None
+
+
+@app.put("/items/{item_id}")
+async def update_item(item_id: int, item: Item = Body(..., embed=True)):
+    results = {"item_id": item_id, "item": item}
+    return results
+```
+
+## Response
+
+### Response Model
+
+```python
+from typing import Optional
+from fastapi import FastAPI
+from pydantic import BaseModel, EmailStr
+
+app = FastAPI()
+
+class UserIn(BaseModel):
+    username: str
+    password: str
+    email: EmailStr
+    full_name: Optional[str] = None
+
+class UserOut(BaseModel):
+    username: str
+    email: EmailStr
+    full_name: Optional[str] = None
+
+@app.post("/user/", response_model=UserOut)
+async def create_user(user: UserIn):
+    return user
+```
+
+Default value and response_model_exclude_unset 
+
+```python
+from typing import List, Optional
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Item(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: float = 10.5
+    tags: List[str] = []
+
+items = {
+    "foo": {"name": "Foo", "price": 50.2},
+    "bar": {"name": "Bar", "description": "The bartenders", "price": 62, "tax": 20.2},
+    "baz": {"name": "Baz", "description": None, "price": 50.2, "tax": 10.5, "tags": []},
+}
+
+@app.get("/items/{item_id}", response_model=Item, response_model_exclude_unset=True)
+async def read_item(item_id: str):
+    return items[item_id]
+```
+
+response_model_include and response_model_exclude
+
+```python
+from typing import Optional
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Item(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: float = 10.5
+
+items = {
+    "foo": {"name": "Foo", "price": 50.2},
+    "bar": {"name": "Bar", "description": "The Bar fighters", "price": 62, "tax": 20.2},
+    "baz": {
+        "name": "Baz",
+        "description": "There goes my baz",
+        "price": 50.2,
+        "tax": 10.5,
+    },
+}
+
+@app.get(
+    "/items/{item_id}/name",
+    response_model=Item,
+    response_model_include={"name", "description"},
+)
+async def read_item_name(item_id: str):
+    return items[item_id]
+
+@app.get("/items/{item_id}/public", response_model=Item, response_model_exclude={"tax"})
+async def read_item_public_data(item_id: str):
+    return items[item_id]
+```
+
+https://fastapi.tiangolo.com/tutorial/response-model/
+
+## Schema Extra
+
+https://fastapi.tiangolo.com/tutorial/schema-extra-example/
+
+## Middleware
+
+https://fastapi.tiangolo.com/tutorial/middleware/
 
 ## CORS
 
