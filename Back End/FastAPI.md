@@ -28,7 +28,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-return {"message": "Hello World"}
+    return {"message": "Hello World"}
 ```
 
 start\
@@ -55,7 +55,7 @@ app = FastAPI()
 
 @app.get("/items/{item_id}")
 async def read_item(item_id: int):
-return {"item_id": item_id}
+    return {"item_id": item_id}
 ```
 
 ### pydantic DTO(Data Transfer Object)
@@ -196,7 +196,7 @@ async def read_items(
 
 Python won't do anything with that *, but it will know that all the following parameters should be called as keyword arguments (key-value pairs), also known as kwargs. Even if they don't have a default value.
 
-https://fastapi.tiangolo.com/tutorial/query-params-str-validations/
+https://fastapi.tiangolo.com/tutorial/query-params-str-validations/ \
 https://fastapi.tiangolo.com/tutorial/path-params-numeric-validations/
 
 ## Request
@@ -392,8 +392,8 @@ https://fastapi.tiangolo.com/tutorial/cors/
 
 # Referrence
 
-https://fastapi.tiangolo.com/\
-https://github.com/tiangolo/fastapi/tree/22528373bba6a654323de416ad5c867cbadb81bb\
-https://www.starlette.io/\
-https://www.uvicorn.org/\
+https://fastapi.tiangolo.com/ \
+https://github.com/tiangolo/fastapi/tree/22528373bba6a654323de416ad5c867cbadb81bb \
+https://www.starlette.io/ \
+https://www.uvicorn.org/ \
 https://pydantic-docs.helpmanual.io/
