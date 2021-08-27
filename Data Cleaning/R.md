@@ -74,28 +74,28 @@ Create Array.
     x <- c(1, 2, 3)
     y <- c(4, 5, 6)
     rbind(x, y)
-      [,1] [,2] [,3]
-    x    1    2    3
-    y    4    5    6
+    #   [,1] [,2] [,3]
+    # x    1    2    3
+    # y    4    5    6
     cbind(x, y)
-         x y
-    [1,] 1 4
-    [2,] 2 5
-    [3,] 3 6
+    #      x y
+    # [1,] 1 4
+    # [2,] 2 5
+    # [3,] 3 6
 ```
 Get value.
 ```R
     x <- array(c(1, 2, 3), c(2,3))
     x
-        [,1] [,2] [,3]
-    [1,]  1    3    2
-    [2,]  2    1    3
+    #     [,1] [,2] [,3]
+    # [1,]  1    3    2
+    # [2,]  2    1    3
     x[1,]
-        [,1] [,2] [,3]
-    [1,]  1    3    2
+    #     [,1] [,2] [,3]
+    # [1,]  1    3    2
     x[1, 1:2]
-        [,1] [,2]
-    [1,]  1    3
+    #     [,1] [,2]
+    # [1,]  1    3
 ```
 
 * `dim()`
@@ -108,9 +108,9 @@ Matrix - 2D dimension vectors.
 Create matrix.
 ```R
     matrix(c(1:4), nrow = 2, ncol = 2, byrow = TRUE)
-        [,1] [,2]
-    [1,]  1    2
-    [2,]  3    4
+    #     [,1] [,2]
+    # [1,]  1    2
+    # [2,]  3    4
 ```
 
 * `t()` - transpose matrix.
@@ -144,9 +144,34 @@ Linked list in C.
 
 ### Factor
 
+The factor is a vector has level.
+And R will record the element and display in level.
+
+```R
+    x <- c(1, 2, 4, 3, 1, 2, 3, 4, 1)
+    factor(x)
+    # [1] 1 2 4 3 1 2 3 4 1
+    # Levels: 1 2 3 4
+    factor(x, ordered = TRUE)#　as.ordered(factor(x))
+    # [1] 1 2 4 3 1 2 3 4 1
+    # Levels: 1 < 2 < 3 < 4
+```
+
+* `levels()`
+* `nlevels()`
+* `unique()`
+* `droplevels()`
 
 ### Dataframe
 
+Store data by 2D factor, can get data like matrix.
+
+* `head()`
+* `names()`
+* `colnames()`
+* `rownames()`
+* `summary()`
+* `merge()`
 
 ### Check missing value
 
@@ -199,6 +224,18 @@ https://www.datamentor.io/r-programming/operator/
 * `edit()`
 * `fix()`
 
+## Advanced loop
+
+* `rep()`
+* `replicate()`
+* `lapply()`
+* `vapply()`
+* `sapply()`
+
+## Read & write data
+
+
+
 ## Other built-in function
 
 * `abs()`
@@ -210,6 +247,7 @@ https://www.datamentor.io/r-programming/operator/
 * `nchar()`
 * `print()`
 * `rm()` - remove variable.
+* `runif()` - a random values from unifrom distrubution 0-1.
 * `sprintf()`
 * `substr()`
 * `sum()`
