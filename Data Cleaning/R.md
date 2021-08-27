@@ -234,7 +234,27 @@ https://www.datamentor.io/r-programming/operator/
 
 ## Read & write data
 
+### CSV
 
+* `read.table(file, header = FALSE, sep = "", na.strings = "NA", skip = 0, encoding = "unknown")`
+* `write.table(x, file = "", sep = " ", na = "NA", fileEncoding = "")`
+
+https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table
+
+https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/write.table
+
+### XML
+
+```R
+    library(XML)
+    data <- xmlToDataFrame(file)
+```
+
+### Text
+
+* scan()
+* load()
+* save()
 
 ## Other built-in function
 
@@ -259,6 +279,8 @@ https://www.datamentor.io/r-programming/operator/
 * `tolower()`
 
 ## Refference
+
+https://www.rdocumentation.org/
 
 https://joe11051105.gitbooks.io/r_basic/content/
 
