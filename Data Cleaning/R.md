@@ -278,7 +278,7 @@ https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/write.table
 * `toupper()`
 * `tolower()`
 
-## Refference
+## Reference
 
 https://www.rdocumentation.org/
 
